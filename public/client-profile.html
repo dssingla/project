@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style/mystyle.css">
+    <script>
+        $(document).ready(function () {
+            let active = localStorage.getItem("activeuser");
+            $("#spanEmail").html(active);
+            $("#CEmail").val(active);
+            $("#logut").click(function () {
+                location.href = "index.html";
+            })
+            $("#CProf").click(function()
+            {
+                let obj = {
+                    type: "get",
+                    url: "/client-search",
+                    data: {
+                      CEmail: $("#CEmail").val()
+                    }
+                }
+                $.ajax(obj).done(function (jsonAry) {
+                    if (jsonAry.length == 0) {
+                        $("#Csearch").prop("type", "hidden");
+                        $("#Cupdate").prop("disabled",true)
+                    }
+                    else
+                    {
+                        $("#CSave").prop("disabled",true);
+                    }
+                })
+            })
+            $("#Csearch").click(function()
+            {
+                let obj = {
+                    type: "get",
+                    url: "/client-search",
+                    data: {
+                      CEmail: $("#CEmail").val()
+                    }
+                }
+                $.ajax(obj).done(function (res) 
+                {
+                    $("#CName").val(res[0].iname);
+                    $("#CPhone").val(res[0].mobile);
+                    $("#CCity").val(res[0].city);
+                    $("#CState").val(res[0].state);
+                    $("#COrg").val(res[0].org);
+                })
+            })
+            $("#CSave").click(function()
+            {
+                let obj = {
+                    type: "get",
+                    url: "/client-data",
+                    data: {
+                      CEmail: $("#CEmail").val(),
+                      CName: $("#CName").val(),
+                      CPhone: $("#CPhone").val(),
+                      CCity: $("#CCity").val(),
+                      CState: $("#CState").val(),
+                      COrg: $("#COrg").val()
+                    }
+                }
+                $.ajax(obj).done(function (res) 
+                {
+          
+                }).fail(function (err) {
+                alert(err.statusText);
+                })
+            })
+            $("#Cupdate").click(function()
+            {
+                let obj = {
+                    type: "get",
+                    url: "/client-data-update",
+                    data: {
+                      CEmail: $("#CEmail").val(),
+                      CName: $("#CName").val(),
+                      CPhone: $("#CPhone").val(),
+                      CCity: $("#CCity").val(),
+                      CState: $("#CState").val(),
+                      COrg: $("#COrg").val()
+                    }
+                }
+                $.ajax(obj).done(function (res) 
+                {
+          
+                }).fail(function (err) {
+                alert(err.statusText);
+                })   
+            })
+        })
+    </script>
+    <style>
+        #searchinfl {
+            padding: 50px 50px 100px 50px;
+            color: whitesmoke;
+            background-image: url(pics/social-media-optimization.avif);
+            border-radius: 15px;
+            text-align: center;
+            font-family: "Swiss 721 BT Condensed", sans-serif;
+        }
+
+        #searchinfl h2 {
+            font-weight: 700;
+            margin-bottom: 30px;
+        }
+
+        #searchinfl h3 {
+            margin-bottom: 30px;
+        }
+
+        #searchtext {
+            padding: 40px;
+            width: 70%;
+
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.306);
+            border-radius: 15px;
+        }
+
+        #Cp {
+            background-image: url(pics/abstract-networking.avif);
+            background-repeat: no-repeat;
+            background-position: right top;
+            background-attachment: scroll;
+            padding-left: 80px;
+            padding-right: 80px;
+            margin-top: 30px;
+        }
+
+        #Cp h2 {
+            letter-spacing: -.04em;
+            font-family: "Swiss 721 BT Condensed", sans-serif;
+            font-size: 2.0rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        #Cp p {
+            font-size: 1.45rem;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark sticky-top" data-bs-theme="dark" id="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-3" href="#">JointVentures</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Our Team</a>
+                    </li>
+                    <li>
+                        <a href="" class="nav-link">Our Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">React Us</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button type="button" class="btn btn-danger me-2" id="logut">Logut</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="continer-fluid" id="inflcardsheading">
+        <div class="col-md-6 offset-md-3">
+            <div class="row">
+                <div class="col-md-12" id="cards">
+                    <center>
+                        <h2 style="color: whitesmoke;">CLIENT SIDE</h2>
+                    </center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row" style="padding-right: 50px;">
+            <div class="col-md-12" id="Cp">
+                <div class="col-md-6" style="padding-top: 50px; height: 600px;background-color: white">
+                    <p>Meet the powerhouse of Influencer: a dynamic team of dreamers, makers, and game changers,
+                        reshaping the future of marketing. With a collective passion and unique expertise, our people
+                        turn data into action, creativity into impact, and new ideas into new realities.</p>
+                    <p>Complete/ Update your Profile firstly : </p>
+                    <button class="btn btn-secondary btn-lg" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" id="CProf">Profile</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="row g-3">
+                                        <div class="col-md-6">
+                                          <label for="CEmail" class="form-label">Email</label>
+                                          <input type="email" class="form-control" id="CEmail" readonly>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <br>
+                                            <input type="button" class="btn btn-primary" name="" id="Csearch" value="Search">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label for="CPhone" class="form-label">Contact</label>
+                                            <input type="tel" class="form-control" id="CPhone">
+                                          </div>
+                                        <div class="col-md-12">
+                                          <label for="CName" class="form-label">Name</label>
+                                          <input type="text" class="form-control" id="CName">
+                                        </div>
+                                        <div class="col-12">
+                                          <label for="COrg" class="form-label">Orgination</label>
+                                          <input type="text" class="form-control" id="COrg" placeholder="">
+                                        </div>
+                                        <div class="col-md-6">
+                                          <label for="CCity" class="form-label">City</label>
+                                          <input type="text" class="form-control" id="CCity">
+                                        </div>
+                                        <div class="col-md-4">
+                                          <label for="CState" class="form-label">State</label>
+                                          <select id="CState" class="form-select">
+                                            <option selected>Punjab</option>
+                                            <option>Haryana</option>
+                                            <option value="">UP</option>
+                                          </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                          <label for="inputZip" class="form-label">Zip</label>
+                                          <input type="text" class="form-control" id="inputZip">
+                                        </div>
+                                        <div class="col-12">
+                                          <button type="submit" class="btn btn-primary" id="CSave">Save</button>
+                                        </div>
+                                      </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="Cupdate">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="padding: 80px;">
+        <div class="row">
+            <div class="col-md-12" id="searchinfl">
+                <div class="col-md-8 offset-2" id="searchtext">
+                    <h2>Find and Hire Influencers</h2>
+                    <h3>Search Instagram, Linkedin, and YouTube influencers.</h3>
+                    <a href="/infl-finder"><button class="btn btn-light">Search Influencers</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="toast show position-fixed bottom-0 end-0 p-2">
+        <div class="toast-header">
+            <strong class="me-auto">Hi,<span id="spanEmail"></span></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+        <div class="toast-body">
+            <p>How are you today?</p>
+        </div>
+    </div>
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <h2>JointVentures</h2>
+                    <p>Thoughtful Marketing For Growing</p>
+                    <i class="fa-brands fa-instagram fa-2xl" style="color: #be2764;"></i>
+                    <i class="fa-brands fa-square-facebook fa-2xl" style="color: #2f66c6;"></i>
+                    <i class="fa-brands fa-x-twitter fa-2xl"></i>
+                    <i class="fa-brands fa-linkedin fa-2xl" style="color: #0c43a1;"></i>
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <form class="row row-cols-lg-auto g-3 align-items-center">
+                        <div class="col-12">
+                            <br>
+                            <label class="visually-hidden" for="footeremail">Username</label>
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="footeremail" placeholder="YOUR E-MAIL">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <br>
+                            <button type="submit" class="btn btn-primary">Suscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

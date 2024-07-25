@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /*5 Minutes Challenge*/
+@import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap");
+body {
+	background-color: #eceff1;
+}
+.card {
+	background-color: #eceff1;
+	border-radius: 30px;
+	text-align: center;
+	padding: 15px;
+	max-width: 375px;
+	margin: 100px auto;
+	box-shadow: 20px 20px 20px darken(#eceff1, 2%),
+		-20px -20px 20px lighten(#eceff1, 2%);
+	.ilustration {
+		margin: 30px;
+		lottie-player {
+			width: 200px;
+			height: 200px;
+			border-radius: 100%;
+			overflow: hidden;
+			margin: 0 auto;
+			box-shadow: 20px 20px 20px darken(#eceff1, 2%),
+				-20px -20px 20px lighten(#eceff1, 2%);
+		}
+	}
+	h3 {
+		font-family:  "Fredoka", sans-serif;;
+		font-size: 2rem;
+		line-height: 2.2rem;
+		color: darken(#eceff1, 80%);
+		font-weight: bold;
+		margin: 30px 0;
+	}
+	p {
+		font-family:  "Fredoka", sans-serif;;
+		font-size: 1rem;
+		line-height: 1.3rem;
+		color: darken(#eceff1, 50%);
+		margin: 30px auto;
+		max-width: 80%;
+	}
+	button {
+		font-family:  "Fredoka", sans-serif;;
+		font-size: 1.1rem;
+		font-weight: bold;
+		padding: 15px 80px;
+		border-radius: 25px;
+		color: white;
+		border: 0;
+		margin: 30px 0;
+		outline: none;
+		background-color: #81c784;
+		box-shadow: 10px 10px 10px darken( rgba(red(#81c784), green(#81c784), blue(#81c784), 0.2), 2% ), -10px -10px 10px lighten( rgba(red(#81c784), green(#81c784), blue(#81c784), 0.2), 2% );
+		transition: ease all 0.3s;
+		cursor: pointer;
+		&:hover {
+			box-shadow: 20px 20px 20px darken( rgba(red(#81c784), green(#81c784), blue(#81c784), 0.1), 2% ), -20px -20px 20px lighten( rgba(red(#81c784), green(#81c784), blue(#81c784), 0.1), 2% );
+			transform: translateY(-3px);
+		}
+		&:active {
+			transform: scale(0.9);
+			box-shadow: inset -1px -1px 3px darken( rgba(red(#81c784), green(#81c784), blue(#81c784), 0.3), 2% ), -20px -20px 20px lighten( rgba(red(#81c784), green(#81c784), blue(#81c784), 0), 2% );
+		}
+	}
+}
+    </style>
+</head>
+<body>
+
+
+    <div class="container-fluid" id="tops">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Coming Events</h4>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="container-fluid" style="padding-top: 30px;" id="cevents">
+                    <div class="row">
+                        <div class="col-md-6" ng-repeat="obj in jsonArraySelected">
+                            <div class="card " id="cards">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5>Event :</h5>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="card-text">{{obj.evnts}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h5>Date :</h5>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p class="card-text">{{obj.doe}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h5>Time :</h5>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p class="card-text">{{obj.tos}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h5>City :</h5>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p class="card-text">{{obj.city}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h5>Venue :</h5>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p class="card-text">{{obj.venue}}</p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <center><a href="#" class="btn btn-danger" ng-click="eventDel(obj.rid)">Delete</a>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="container-fluid" style="padding-top: 30px;" id="cevents">
+                    <div class="row">
+                        <div class="col-md-6" ng-repeat="obj in eEventsArray">
+                            <div class="card" id="cards">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <h5>Event :</h5>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p class="card-text">{{obj.evnts}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h5>Date :</h5>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p class="card-text">{{obj.doe}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h5>Time :</h5>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p class="card-text">{{obj.tos}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h5>City :</h5>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p class="card-text">{{obj.city}}</p>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <h5>Venue :</h5>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <p class="card-text">{{obj.venue}}</p>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <center><a href="#" class="btn btn-danger" ng-click="eventDel(obj.rid)">Delete</a>
+                                    </center>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>

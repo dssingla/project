@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style/mystyle.css">
+    <script>
+        var module = angular.module("mymodule", []);
+        var controller = module.controller("mycontroller", function ($scope, $http) {
+            $scope.getall = function () {
+                let url = "/events-data";
+                $http.get(url).then(function (response) {
+                    $scope.jsonArraySelected = response.data;
+
+                }, function (err) {
+                    alert(err);
+                });
+            }
+            $scope.getEall = function () {
+                let url = "/eevents-data";
+                $http.get(url).then(function (response) {
+                    $scope.eEventsArray = response.data;
+
+                }, function (err) {
+                    alert(err);
+                });
+            }
+            $scope.eventDel = function (rid) {
+                let url = "/event-delete?rid=" + rid;
+                $http.get(url).then(function (response) {
+                    $scope.getall();
+                    $scope.getEall();
+                })
+            }
+            $scope.openmodel =function(rid)
+            {
+                let url= "/infl-event-show?rid=" +rid;
+                $http.get(url).then(function(response)
+                {
+                    $scope.inflArray=response.data; 
+                })
+            }
+        })
+        
+    </script>
+    <script>
+        $(document).ready(function()
+        {
+            $("#logut").click(function()
+            {
+                location.href="index.html";
+            })
+        })
+    </script>
+    <style>
+        #mcard {
+            background-color: rgb(117, 143, 174);
+            margin-bottom: 15px;
+        }
+
+        #tops {
+            margin-top: 80px;
+        }
+        #h11{
+            padding: 10px;
+            margin-bottom: 40px;
+        }
+        #h12{
+
+            height: 500px;
+            background-color: #c8d891;
+            text-align: center;
+            padding: 20px;
+        }
+        #h13{
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 350px;
+        }
+        #h13::-webkit-scrollbar {
+            width: 10px;
+          }
+          #h13::-webkit-scrollbar-track {
+            background: #dfdfdf;
+          }
+          #h13::-webkit-scrollbar-thumb {
+            background: black;
+          }
+         #h13::-webkit-scrollbar-thumb:hover {
+            background: rgb(56, 55, 55);
+          }
+        #h12 ul{
+            list-style: none;
+            padding-left: 0px;
+            margin-bottom: 0px;
+            
+        }
+        #h12 li{
+            line-height: 50px;
+            border-bottom: 1px solid black;
+            
+        }
+        #card{
+            background-color: rgb(27, 27, 27);
+            margin-top: 10px;
+            font-family: "Poppins", sans-serif;
+            padding: 15px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body ng-app="mymodule" ng-controller="mycontroller" ng-init="getall();getEall()">
+
+    <nav class="navbar navbar-expand-lg bg-dark sticky-top" data-bs-theme="dark" id="navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand fs-3" href="#">JointVentures</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Our Team</a>
+                    </li>
+                    <li>
+                        <a href="" class="nav-link">Our Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">React Us</a>
+                    </li>
+                </ul>
+                <form class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button type="button" class="btn btn-danger me-2" id="logut">Logout</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="continer-fluid" id="inflcardsheading">
+        <div class="col-md-6 offset-md-3">
+          <div class="row">
+            <div class="col-md-12" id="cards">
+              <center>
+                <h2 style="color: whitesmoke;">INFLUENCERS</h2>
+              </center>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="col-md-8 offset-md-2"id="h11" >
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="h12">
+                        <div  id="inflcardsheading">
+                            <div class="col-md-12" id="card">
+                                <center>
+                                    <h2 style="color: whitesmoke;">Coming Events</h2>
+                                </center>
+                            </div>
+                        </div>
+                        <div id="h13">
+                            <ul>
+                                <li ng-repeat="obj in jsonArraySelected">
+                                    <div class="row">
+                                        <div class="col-md-2" style="text-align: left;">{{$index+1}}</div>
+                                        <div class="col-md-6">{{obj.evnts}}</div>
+                                        <div class="col-md-4">
+                                            <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#showd" ng-click="openmodel(obj.rid)">More</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div id="h12">
+                        <div id="inflcardsheading">
+                            <div class="col-md-12" id="card">
+                                <center>
+                                    <h2 style="color: whitesmoke;">Past Events</h2>
+                                </center>
+                            </div>
+                        </div>
+                        <div id="h13">
+                            <ul>
+                                <li ng-repeat="obj in eEventsArray">
+                                    <div class="row">
+                                        <div class="col-md-2" style="text-align: left;">{{$index+1}}</div>
+                                        <div class="col-md-6">{{obj.evnts}}</div>
+                                        <div class="col-md-4">
+                                            <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#showd" ng-click="openmodel(obj.rid)">More</button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="showd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Event Information</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="card" id="mcard" ng-repeat="obj in inflArray">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <h5>Event :</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p class="card-text">{{obj.evnts}}</p>
+                        </div>
+                        <div class="col-md-5">
+                            <h5>Date :</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p class="card-text">{{obj.doe}}</p>
+                        </div>
+                        <div class="col-md-5">
+                            <h5>Time :</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p class="card-text">{{obj.tos}}</p>
+                        </div>
+                        <div class="col-md-5">
+                            <h5>City :</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p class="card-text">{{obj.city}}</p>
+                        </div>
+                        <div class="col-md-5">
+                            <h5>Venue :</h5>
+                        </div>
+                        <div class="col-md-7">
+                            <p class="card-text">{{obj.venue}}</p>
+                        </div>
+                        <div>
+                            <center>
+                                <button class="btn btn-danger" data-bs-dismiss="modal" ng-click="eventDel(obj.rid)">Delete</button>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+    <footer>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <h2>JointVentures</h2>
+                    <p>Thoughtful Marketing For Growing</p>
+                    <i class="fa-brands fa-instagram fa-2xl" style="color: #be2764;"></i>
+                    <i class="fa-brands fa-square-facebook fa-2xl" style="color: #2f66c6;"></i>
+                    <i class="fa-brands fa-x-twitter fa-2xl"></i>
+                    <i class="fa-brands fa-linkedin fa-2xl" style="color: #0c43a1;"></i>
+                </div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-3">
+                    <form class="row row-cols-lg-auto g-3 align-items-center">
+                        <div class="col-12">
+                            <br>
+                            <label class="visually-hidden" for="footeremail">Username</label>
+                            <div class="input-group">
+                                <input type="email" class="form-control" id="footeremail" placeholder="YOUR E-MAIL">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <br>
+                            <button type="submit" class="btn btn-primary">Suscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

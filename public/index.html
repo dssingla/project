@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style/mystyle.css">
+
+  <script>
+    $(document).ready(function () {
+      $("#sBtn").click(function () {
+        let obj = {
+          type: "get",
+          url: "/add-user",
+          data: {
+            email: $("#email").val(),
+            pwd: $("#pwd").val(),
+            utype: $("#check").val()
+          }
+        }
+        $.ajax(obj).done(function (jsonAry) {
+          let x;
+        }).fail(function (err) {
+          alert(err.statusText);
+        })
+      });
+      $("#login").click(function () {
+        let x = $("#lemail").val();
+        let obj = {
+          type: "get",
+          url: "/search-user",
+          data: {
+            lemail: $("#lemail").val(),
+            lpwd: $("#lpwd").val(),
+          }
+        }
+        $.ajax(obj).done(function (jsonAry) 
+        {
+          $("#errlogin").html(jsonAry);
+          if(jsonAry=="Influncer")
+          {
+            location.href="infl-dash.html"
+            localStorage.setItem("activeuser",$("#lemail").val());
+          }
+          else if(jsonAry=="Collaborate")
+          {
+            location.href="client-profile.html"
+            localStorage.setItem("activeuser",$("#lemail").val());
+          }
+        }).fail(function (err) 
+        {
+          alert(err.statusText);
+        })
+      })
+      $("#fp").click(function()
+      {
+        alert();
+      })
+    });
+  </script>
+  <style>
+    #admininfo{
+      font-family: "Poppins", sans-serif;
+      background-image: url(pics/grey-background.avif);
+      background-size: cover;
+      color: #455a64;
+      padding-top: 40px;
+      padding-bottom: 30px;
+      padding-left: 50px;
+      padding-right: 30px;
+    }
+    #userinfo{
+      background-color: #d36769;
+      padding: 50px;
+      text-align: center;
+      margin: auto;
+      color: white;
+      font-family: "Poppins", sans-serif;
+    }
+    #userinfo i{
+      font-size: 50px;margin-bottom: 10px;
+    }
+    #userinfo hr{
+      border: 2px solid rgb(232, 223, 223);
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+    #userinfo h2{
+      font-size: 50px;
+    }
+    #siteinfo{
+      padding: 50px;
+    }
+    footer{
+      padding-left: 25px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      background-color: rgb(28, 27, 27);
+      color: #b1b2b3;
+    }
+    #atags{
+      float: right;
+    }
+    #cards{
+      background-color: rgb(27, 27, 27);
+      margin-top: 20px;
+      font-family: "Poppins", sans-serif;
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    #navbar{
+      height: 100px;
+      color: whitesmoke;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg bg-dark sticky-top" data-bs-theme="dark" id="navbar">
+    <div class="container-fluid">
+      <a class="navbar-brand fs-3" href="#">JointVentures</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Our Team</a>
+          </li>
+          <li>
+            <a href="" class="nav-link">Our Services</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link">React Us</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal"
+              data-bs-target="#myLogin">Login</button>
+            <button type="button" class="btn btn-outline-light me-2" data-bs-toggle="modal"
+              data-bs-target="#mySignup">Signup</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- The Modal -->
+  <div class="modal" id="myLogin">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Login</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="container mt-3">
+            <form action="/action_page.php">
+              <div class="mb-3 mt-3">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="lemail" placeholder="Enter email" name="lemail">
+              </div>
+              <div class="mb-3">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="lpwd" placeholder="Enter password" name="lpwd">
+              </div>
+              <a href="" id="fp">forgot passowrd?</a>
+              <div class="mb-3">
+                <span id="errlogin">*</span>
+              </div>
+              <center><button class="btn btn-primary" id="login">Login</button></center>
+            </form>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- The Modal -->
+  <div class="modal" id="mySignup">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Sign Up</h4>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="container mt-3">
+            <form action="/action_page.php">
+              <div class="mb-3 mt-3">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+              </div>
+              <div class="mb-3">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+              </div>
+              <div class="mb-3">
+                <label for="check">Type: </label>
+                <select id="check" class="form-control">
+                  <option value="Influncer">Influncer</option>
+                  <option value="Collaborate">Collaborate</option>
+                </select>
+              </div>
+              <input type="button" class="btn btn-primary" id="sBtn" value="Sign Up">
+              <!-- <button class="btn btn-primary" id="sBtn">Sign up</button> -->
+            </form>
+          </div>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div id="carouselIndicators" class="carousel slide">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="100">
+        <img src="pics/indian-woman-working-laptop.jpg" class="w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="pics/online-school.jpg" class="w-100" >
+      </div>
+      <div class="carousel-item">
+        <img src="pics/computer-programmer.jpg" class="d-block w-100" alt="...">
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <div class="continer-fluid">
+    <div class="col-md-6 offset-md-3">
+      <div class="row">
+        <div class="col-md-12" id="cards">
+          <center><h2 style="color: whitesmoke;">Our Services</h2></center>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="col-md-10  offset-md-1">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card">
+            <img src="pics/collabs.jpg" class="card-img-top" alt="..."/>
+            <div class="card-body">
+              <h5 class="card-title">Collaborations</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="pics/business-partners-shaking-hands.jpg" class="card-img-top" alt="..."/>
+            <div class="card-body">
+              <h5 class="card-title">Meet & Greet</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="pics/social-media-marketing.avif" class="card-img-top" alt="..."/>
+            <div class="card-body">
+              <h5 class="card-title">Promotions</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card">
+            <img src="pics/influencer-marketing-job.avif" class="card-img-top" alt="..."/>
+            <div class="card-body">
+              <h5 class="card-title">Influencers</h5>
+              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. </p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" id="userinfo">
+    <div class="row">
+      <div class="col-md-4" id="siteinfo">
+        <h2><br>SOME <br>NUMBERS</h2>
+      </div>
+      <div class="col-md-4" id="siteinfo">
+        <i class="fa-solid fa-circle-user"></i>
+        <h2>50+</h2>
+        <hr>
+        <h3>Users</h3>
+      </div>
+      <div class="col-md-4" id="siteinfo">
+        <i class="fa-solid fa-puzzle-piece"></i>
+        <h2>500+</h2>
+        <hr>
+        <h3>Activities</h3>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" id="ourapproach">
+    <div class="row">
+      <div class="col-md-6">
+        <B>
+          <P>MEASUREMENT</P>
+        </B>
+        <h3>TRANSFORMING DATA INTO GROWTH</h3>
+        <p>At Influencer, we don't just reference data — we bring it to life. Our Influencer Marketing Platform and Impact Studio help us transform data into actionable strategies, morphing followers into dedicated customers. We work with you to determine which KPI's matter most and refocus your efforts there.</p>
+      </div>
+      <div class="col-md-6">
+        <video  style="width: 70%; float:right" autoplay muted loop>
+          <source src="pics/MODULE 1 Animation_Loop.mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid" id="admininfo">
+    <div class="row">
+      <div class="col-md-8">
+        <h3 style="color: #930002;">Stay in touch</h3>
+        <b>DEEPAK SINGLA</b>
+        <h5>#06849,Power House Road, <br>Bathinda, Punjab <br>Pin -151001, India <br><i>Copyright © 2024 </i>- Developed by Me <br>+91 7986240401 <br> deepak1442005@gmail.com</h5>
+      </div>
+      <div class="col-md-6">
+        <a href="/admin-login"><button class="btn btn-danger">Admin Login</button></a>
+      </div>
+      <div class="col-md-6">
+        <div id="atags">
+          <br>
+          <i class="fa-brands fa-instagram fa-2xl" style="color: #be2764;"></i>
+          <i class="fa-brands fa-square-facebook fa-2xl" style="color: #2f66c6;"></i>
+          <i class="fa-brands fa-x-twitter fa-2xl"></i>
+          <i class="fa-brands fa-linkedin fa-2xl" style="color: #0c43a1;"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <h2>JointVentures</h2>
+          <p>Thoughtful Marketing For Growing</p>
+          <i class="fa-brands fa-instagram fa-2xl" style="color: #be2764;"></i>
+          <i class="fa-brands fa-square-facebook fa-2xl" style="color: #2f66c6;"></i>
+          <i class="fa-brands fa-x-twitter fa-2xl"></i>
+          <i class="fa-brands fa-linkedin fa-2xl" style="color: #0c43a1;"></i>
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3">
+          <form class="row row-cols-lg-auto g-3 align-items-center">
+            <div class="col-12">
+              <br>
+              <label class="visually-hidden" for="footeremail">Username</label>
+              <div class="input-group">
+                <input type="email" class="form-control" id="footeremail" placeholder="YOUR E-MAIL">
+              </div>
+            </div>          
+            <div class="col-12">
+              <br>
+              <button type="submit" class="btn btn-primary">Suscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
