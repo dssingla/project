@@ -26,7 +26,8 @@
           }
         }
         $.ajax(obj).done(function (jsonAry) {
-          let x;
+          $("errAcc").html("hello");
+          alert();
         }).fail(function (err) {
           alert(err.statusText);
         })
@@ -170,7 +171,6 @@
         <!-- Modal body -->
         <div class="modal-body">
           <div class="container mt-3">
-            <form action="/action_page.php">
               <div class="mb-3 mt-3">
                 <label for="email">Email:</label>
                 <input type="email" class="form-control" id="lemail" placeholder="Enter email" name="lemail">
@@ -184,7 +184,6 @@
                 <span id="errlogin">*</span>
               </div>
               <center><button class="btn btn-primary" id="login">Login</button></center>
-            </form>
           </div>
         </div>
 
@@ -229,7 +228,9 @@
                   <option value="Influncer">Influncer</option>
                   <option value="Collaborate">Collaborate</option>
                 </select>
+                <span id="errAcc">*</span>
               </div>
+              
               <input type="button" class="btn btn-primary" id="sBtn" value="Sign Up">
               <!-- <button class="btn btn-primary" id="sBtn">Sign up</button> -->
             </form>

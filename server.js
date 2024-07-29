@@ -13,16 +13,17 @@ app.use(fileloader());
     dateStrings:true
     
 }*/
-let config={
+/*let config={
     host:"bxlhtcpo4hhlmrtjr6hw-mysql.services.clever-cloud.com",
     user:"un0wke91voucg3qk",
     password:"xFYYldl8cJ7DD4s0ffGA",
     database:"bxlhtcpo4hhlmrtjr6hw",
     dateStrings:true,
     keepAliveInitialDelay:10000,
-    enableKeepAlive:true
+    enableKeepAlive:true`
     
-}
+}*/
+let config="mysql://avnadmin:AVNS_2J_n9_oNmdG_EWNlx45@mysql-23b6d881-deepak1442005-7e34.g.aivencloud.com:21176/defaultdb";
 var mysql=mysql2.createConnection(config);
 mysql.connect(function(err)
 {
@@ -53,12 +54,16 @@ app.get("/add-user",function(req,res)
     let password=req.query.pwd;
     let x=1;
     let y=req.query.utype;
-    console.log(y);
+    //console.log(y);
     //console.log(pwd);
     mysql.query("insert into users values(?,?,?,?)",[email,password,y,x],function(err)
     {
         if(err==null)
+        {
+            res.send("account created");
             console.log("Bahut Bahut Badhai.....");
+        }
+
         else
             res.send(err.message);
     })
