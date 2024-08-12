@@ -3,6 +3,14 @@ var mysql2=require("mysql2");
 let fileloader=require("express-fileupload");
 let app=express();
 app.use(fileloader());
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'deepak1442005@gmail.com',
+      pass: 'qnum tgrt jrgi hnri'
+    }
+  });
 
 
 /*let config={
@@ -56,18 +64,53 @@ app.get("/add-user",function(req,res)
     let y=req.query.utype;
     //console.log(y);
     //console.log(pwd);
-    mysql.query("insert into users values(?,?,?,?)",[email,password,y,x],function(err)
+    mysql.query("insert into users values(?,?,?,?)",[email,password,y,x],function(err,result)
     {
         if(err==null)
         {
-            res.send("account created");
-            console.log("Bahut Bahut Badhai.....");
+            console.log("Congrats...");
+            res.send("Signup Successfully")
         }
 
         else
             res.send(err.message);
     })
 
+})
+app.get("/forgot-password",function(req,res)
+{
+    let email=req.query.lemail;
+    mysql.query("select pwd from users where email=?",[email],function(err,result)
+    {
+        if(err!=null)
+        {
+            res.send(err.message);
+            return;
+        }
+        if(result.length==0)
+        {
+            res.send("invalid id");
+            return;
+        }
+        res.send("Password send to your mail");
+        var mailOptions = {
+            from: 'deepak1442005@gmail.com',
+            to: email,
+            subject: 'Forgot Password',
+            text: result[0].pwd
+          };
+          transporter.sendMail(mailOptions, function(err, info){
+            if (err) 
+            {
+              console.log(err);
+            }
+            else 
+            {
+              console.log('Email sent: ' + info.response);
+            }
+          });
+        
+    })
 })
 app.get("/search-user",function(req,res)
 {

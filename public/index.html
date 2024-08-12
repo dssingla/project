@@ -26,7 +26,7 @@
           }
         }
         $.ajax(obj).done(function (jsonAry) {
-          $("errAcc").html("hello");
+          $("#errAcc").html(jsonAry)
         }).fail(function (err) {
           alert(err.statusText);
         })
@@ -61,7 +61,19 @@
       })
       $("#fp").click(function()
       {
-        alert();
+        let obj = {
+          type: "get",
+          url: "/forgot-password",
+          data: {
+            lemail: $("#lemail").val()
+          }
+        }
+        $.ajax(obj).done(function (jsonAry) 
+        {
+          $("#errlogin").html(jsonAry)
+        }).fail(function (err) {
+          alert(err.statusText);
+        })
       })
     });
   </script>
@@ -178,7 +190,7 @@
                 <label for="pwd">Password:</label>
                 <input type="password" class="form-control" id="lpwd" placeholder="Enter password" name="lpwd">
               </div>
-              <a href="" id="fp">forgot passowrd?</a>
+              <a id="fp">forgot passowrd?</a>
               <div class="mb-3">
                 <span id="errlogin">*</span>
               </div>
